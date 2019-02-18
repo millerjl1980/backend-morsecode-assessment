@@ -3,6 +3,10 @@
 """
 Morse code decoder
 
+https://www.codewars.com/kata/decode-the-morse-code/python
+https://www.codewars.com/kata/decode-the-morse-code-advanced/python
+
+
 When transmitting the Morse code, the international standard specifies that:
 
 "Dot" – is 1 time unit long.
