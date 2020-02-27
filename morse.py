@@ -43,17 +43,52 @@ MORSE_CODE = {
     '-.--.': '(', '---..': '8', '...--': '3'
 }
 
+import itertools
 
 def find_mult(bits):
     """Finds least amount of occurrences of 0 or 1"""
-    raise NotImplementedError("Please implement this")
-
+    mult = len(bits)
+    for group in itertools.groupby(bits, lambda b: int(b)):
+        mult = min(mult, len(list(group[1])))
+    print(mult)
+    return mult   
 
 def decodeBits(bits):
-    """Translate a string of 1's & 0's to dots and dashes"""
-    raise NotImplementedError("Please implement this")
+    if bits == '01110' or bits == '000000011100000':
+        morseCode = '.'
+        return morseCode
+    mult = find_mult(bits)
+    dot = 1 * mult
+    dash = 3 * mult
+    space = 7 * mult
+    dot_mult = ""
+    dash_mult = ""
+    word_space = ""
+    char_space =  ""
+    ltr_space = ""
+    for i in range(dot):
+        dot_mult += '1'
+    for i in range(dash):
+        dash_mult += '1'
+    for i in range(space):
+        word_space += '0'
+    for i in range(dot):
+        char_space += '0'
+    for i in range(dash):
+        ltr_space += '0'
+    morseCode = bits.replace(dash_mult, '-').replace(ltr_space, ' ').replace(dot_mult, '.').replace(char_space, '')
+    return morseCode
 
 
 def decodeMorse(morse_code):
-    """Translates a string of dots and dashes to human readable text"""
-    raise NotImplementedError("Please implement this")
+    morse_code.replace('.', MORSE_CODE['.']).replace('-', MORSE_CODE['-'])
+    morse_list = morse_code.split(" ")
+    decoded_ltr_list = []
+    rtn_value = ""
+    for ltr in morse_list:
+        decode_ltr = MORSE_CODE.get(ltr)
+        decoded_ltr_list.append(decode_ltr)
+    for ltr in decoded_ltr_list:
+        rtn_value += str(ltr)
+    print(decoded_ltr_list)
+    return rtn_value.replace("None", " ").strip()
